@@ -1,0 +1,40 @@
+<div class="toolbar" data-hook="toolbar">
+  <ul class="actions">
+    <li id="new_gift_package_link">
+      <%= button_link_to t(:new_gift_package), new_object_url, {:remote => true, :icon => 'add', :id => 'admin_new_gift_package'} %>
+    </li>
+  </ul>
+  <br class="clear" />
+</div>
+
+<h1><%= t(:listing_gift_packages) %></h1>
+
+<div id="new_gift_package" data-hook></div>
+
+<table class="index" id="listing_gift_packages">
+  <tr>
+    <th>Title</th>
+	<th>Image</th>
+    <th>Description</th>
+    <th>Amount</th>
+    <th>Calculator</th>
+    <th data-hook="admin_products_index_header_actions"></th>
+  </tr>
+
+<% @gift_packages.each do |gift_package| %>
+  <tr>
+    <td><%= gift_package.title %></td>
+	<td><%= image_tag gift_package.image.url(:mini) %> </td>
+    <td><%= gift_package.description %></td>
+    <td><%= gift_package.calculator.preferred_amount %></td>
+    <td><%= link_to 'Show', admin_gift_package_path(gift_package) %>
+    <%= link_to 'Edit', edit_admin_gift_package_path(gift_package) %>
+    <%= link_to 'Destroy', admin_gift_package_path(gift_package), confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+
+
+<% content_for :sidebar do %>
+<% end %>

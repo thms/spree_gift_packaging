@@ -1,0 +1,1 @@
+require 'spree/gift_packaging'

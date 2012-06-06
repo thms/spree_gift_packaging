@@ -1,0 +1,37 @@
+<% @gift_package = @product.possible_gift_packages.first %>
+<style>
+	#gift-packaging-dialog .ui-icon {display:inline;}
+	#gift-packaging-dialog a.button {color:#fff;}
+	#gift-packaging-dialog div.price {font-size:36px;line-height:36px;color:#aaa;font-weight:bold}
+	#gift-packaging-dialog div.price:first-letter {font-size:28px;vertical-align:super;}
+</style>
+
+<script>
+$(function() {
+	// a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+	$( "#dialog:ui-dialog" ).dialog( "destroy" );
+	
+	$("#gift-packaging-dialog").dialog({
+		autoOpen: false,
+		height: 500,
+		width: 500,
+		modal: true,
+		title: ""
+	});
+
+});
+</script>
+<div id="gift-packaging-dialog">
+	<h2>Add Gift Packaging</h2>
+	<div><%= @gift_package.description %></div>
+	<div class="product-image" style="float:left;width:180px;margin-top:24px;margin-left:24px;">
+  		<%= image_tag @gift_package.image.url(:thumb), :itemprop => "name", :style => "float:right;text-decoration:none;"  %>
+	</div>
+	<div style="float:left;margin-top:20px;margin-left:24px;width:240px;">
+		<div class="price selling" itemprop="price"><%= number_to_currency @gift_package.price %></div>
+	</div>
+	<div class="clearfix"></div>
+	<div style="margin:24px auto auto 160px;">
+		<%= link_to t(:continue_shopping), 'javascript:$("#gift-packaging-dialog").dialog("close")', :class => 'button large' %><br /><br />
+	</div>
+</div>

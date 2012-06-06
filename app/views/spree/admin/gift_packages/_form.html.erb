@@ -1,0 +1,38 @@
+<%= form_for([:admin, @gift_package], :html => { :multipart => true }) do |f| %>
+  <% if @gift_package.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@gift_package.errors.count, "error") %> prohibited this gift package from being saved:</h2>
+
+      <ul>
+      <% @gift_package.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<fieldset>
+<legend>Basic Info</legend>
+  <div class="field">
+    <%= f.label :title %> 
+	<%= f.text_field :title %> <span class="required">*</span>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description %> <span class="required">*</span>
+  </div>
+
+  <div class="field">
+	<%= f.label :image_file_name %>
+	<%= f.file_field :image %>
+	<%= content_tag :p, image_tag(@gift_package.image.url) if @gift_package.image %>
+  </div>
+
+<%= render :partial => 'spree/admin/shared/calculator_fields', :locals => { :f => f } %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
