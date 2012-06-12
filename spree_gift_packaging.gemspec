@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_gift_packaging'
-  s.version     = '0.0.3'
+  s.version     = '0.0.4'
   s.summary     = 'Spree Commerce Extensions for Gift Packaging'
 
   s.author        = 'Thomas Boltze'
