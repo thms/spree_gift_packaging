@@ -4,7 +4,7 @@
 module Spree
   class Calculator::GiftPackaging < Spree::Calculator
     
-    preference :amount, :decimal, :default => 0
+    preference :amount, :decimal, :default => 0.0
     
     def self.description
       I18n.t(:gift_packaging)

@@ -22,7 +22,7 @@ module Spree
       label = "Gift Packaging"
       # Create a single adjustment for the order covering all line items that use gift packaging
       if order.is_a?(Spree::Order)
-        create_adjustment(label, order, order)
+        create_adjustment(label, order, order, true)
       end
     end
     
