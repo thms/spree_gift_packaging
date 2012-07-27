@@ -1,0 +1,6 @@
+<% content_for :sub_menu do %>
+  <ul id="sub_nav" data-hook="admin_gift_packaging_sub_tabs">
+    <%= tab :gift_packages, :match_path => '/gift_packages' %>
+    <%= tab :gift_package_exceptions, :match_path => '/gift_package_exceptions', :css_class => 'last' %>
+  </ul>
+<% end %>

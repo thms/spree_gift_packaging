@@ -1,9 +1,11 @@
 Spree::Product.class_eval do
   
+  has_many :gift_package_exceptions
+  
   # Provide all possible gift packages for a product
-  # Currently all packages (only one anyway) are available for all products
-  # Hook in here to make restrictions and limitations.
+  # remove the ones that are not valid for the current product
   def possible_gift_packages
-    Spree::GiftPackage.all
+    Spree::GiftPackage.all.select { |gift_package| gift_package.valid_for_product?(self)  }
   end
 end
+

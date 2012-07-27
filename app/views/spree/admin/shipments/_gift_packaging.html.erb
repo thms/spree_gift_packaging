@@ -7,7 +7,7 @@
 	<% @shipment.line_items.each do |line_item| %>
 		<tr>
 			<td><%= line_item.variant.sku %></td>
-			<td><%= line_item.use_gift_packaging.to_s.humanize %></td>
+			<td><%= line_item.gift_package.title %></td>
 		</tr>
 	<% end %>
 </table>

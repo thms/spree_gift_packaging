@@ -1,0 +1,40 @@
+<%= render :partial => 'spree/admin/shared/gift_packaging_sub_menu' %>
+
+<div class="toolbar" data-hook="toolbar">
+  <ul class="actions">
+    <li id="new_gift_package_exception_link">
+      <%= button_link_to t(:new_gift_package_exception), new_object_url, {:remote => true, :icon => 'add', :id => 'admin_new_gift_package_exception'} %>
+    </li>
+  </ul>
+  <br class="clear" />
+</div>
+
+<h1><%= t(:listing_gift_package_exceptions) %></h1>
+<p>This list contains all combinations of products and gift packages that are not allowed on the site.</p>
+<div id="new_gift_package_exception" data-hook></div>
+
+<table class="index" id="listing_gift_package_exceptions">
+  <tr>
+   	<th>Product SKU</th>
+  	<th>Product Name</th>
+	<th>Gift Package</th>
+     <th data-hook="admin_gift_package_exception_index_header_actions"></th>
+  </tr>
+
+<% @gift_package_exceptions.each do |gift_package_exception| %>
+  <tr>
+  	<td><%= link_to gift_package_exception.product.sku, gift_package_exception.product %></td>
+  	<td><%= gift_package_exception.product.name %></td>
+    <td><%= link_to gift_package_exception.gift_package.title, admin_gift_package_path(gift_package_exception.gift_package) %>
+	    <%= image_tag gift_package_exception.gift_package.image.url(:mini) %> </td>
+    <td>
+    <%= link_to 'Edit', edit_admin_gift_package_exception_path(gift_package_exception) %>
+    <%= link_to 'Destroy', admin_gift_package_exception_path(gift_package_exception), confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+
+
+<% content_for :sidebar do %>
+<% end %>

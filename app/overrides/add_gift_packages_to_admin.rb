@@ -8,6 +8,11 @@ Deface::Override.new(:virtual_path => 'spree/admin/configurations/index',
                         </tr> },
                       :disabled => false)
                       
+Deface::Override.new(:virtual_path => "spree/layouts/admin",
+                    :name => "gift_packaging_admin_tabs",
+                    :insert_bottom => "[data-hook='admin_tabs'], #admin_tabs[data-hook]",
+                    :text => "<%= tab(:gift_packaging, :url => spree.admin_gift_packages_path) %>",
+                    :disabled => false)
 
 Deface::Override.new(:virtual_path => 'spree/admin/shipments/_form',
                       :name => 'add_gift_packaging_to_shipment_form',

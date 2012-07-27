@@ -1,0 +1,31 @@
+<%= form_for([:admin, @gift_package_exception], :html => { :multipart => true }) do |f| %>
+  <% if @gift_package_exception.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@gift_package_exception.errors.count, "error") %> prohibited this gift package exception from being saved:</h2>
+
+      <ul>
+      <% @gift_package_exception.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<fieldset>
+<legend>Basic Info</legend>
+  <div class="field">
+    <%= f.label :product %> 
+	<%= f.collection_select :product_id, Spree::Product.all, :id, :name %> <span class="required">*</span>
+  </div>
+
+  <div class="field">
+    <%= f.label :gift_package %>
+    <%= f.collection_select :gift_package_id, Spree::GiftPackage.all, :id, :title %> <span class="required">*</span>
+  </div>
+
+ 
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

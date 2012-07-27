@@ -12,20 +12,29 @@ module Spree
                       :url => "/system/gift_packages/:attachment/:id/:style/:basename.:extension",
                       :path => ":rails_root/public/system/gift_packages/:attachment/:id/:style/:basename.:extension"
     
-    # Called on order.update!
-    def eligible?(order)
-      true
+    has_many :gift_package_exceptions
+    
+    # Called on order.update for line items and order
+    def eligible?(object)
+      Rails.logger.warn "============== #{object.class.name} =============="
+      object.gift_package_id == self.id
     end
     
     # Create adjustments for the order
-    def adjust(order)
+    # TODO: this should be done and called on the line item level, not on the order level, since each line item
+    # can have a different gift package
+    def adjust(object)
       label = "Gift Packaging"
-      # Create a single adjustment for the order covering all line items that use gift packaging
-      if order.is_a?(Spree::Order)
-        create_adjustment(label, order, order, true)
+      # Create a single adjustment for the order covering all line items that use gift packaging (WRONG)
+      if object.is_a?(Spree::Order)
+        create_adjustment(label, object, object, true)
+      end
+      if object.is_a?(Spree::LineItem)
+        create_adjustment(label, object, object, true)
       end
     end
     
+    # TODO: Do we need to change this to the specific package?
     def self.match(order)
       Spree::GiftPackage.all
     end
@@ -33,6 +42,14 @@ module Spree
     def price
       self.calculator.preferred_amount
     end
+    
+    def valid_for_product?(product)
+      gift_package_exceptions.each do |exception|
+        return false if exception.covers?(product) 
+      end
+      true
+    end
+    
     
   end
 end
