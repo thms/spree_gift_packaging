@@ -1,4 +1,4 @@
 <td data-hook="cart_gift_packaging_selector" style="text-align:center;">
-  <%= item_form.text_field :gift_package_id %>
+	<%= item_form.collection_select :gift_package_id, line_item.product.possible_gift_packages, :id, :title_for_selector, :include_blank => "No Gift Package" %>
 </td>
 
