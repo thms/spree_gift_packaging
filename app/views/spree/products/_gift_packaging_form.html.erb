@@ -3,11 +3,11 @@
 	<h4>Gift Packaging</h4>
 	<ul id="gift-packaging-mockup">
 	<% @product.possible_gift_packages.each do |gift_package| %>
-		<li onclick="javascript:$('#gift-packaging-dialog_<%= gift_package.id -%>').dialog('open');"><%= radio_button_tag "gift_packages[#{@product.id}]", gift_package.id, gift_package.default_for_product?(@product) -%>
+		<li onclick="javascript:$('#gift-packaging-dialog_<%= gift_package.id -%>').dialog('open');$(this).children('input:first').attr('checked',true);"><%= radio_button_tag "gift_packages[#{@product.id}]", gift_package.id, gift_package.default_for_product?(@product) -%>
 		<%= image_tag gift_package.image(:midi) -%> 
 		<span style="display:inline-block;width:130px;line-height:1.2em;"><%= gift_package.title -%> (<%= number_to_currency gift_package.price -%>)</span></li>
 	<% end %>
-		<li><%= radio_button_tag "gift_packages[#{@product.id}]", nil %>No Gift packaging</li>
+		<li onclick="javascript:$(this).children('input:first').attr('checked',true);"><%= radio_button_tag "gift_packages[#{@product.id}]", nil %>No Gift packaging</li>
 	</ul>
 <% else %>
 	<%= f.hidden_field "gift_packages[#{@product.id}]", nil %>
