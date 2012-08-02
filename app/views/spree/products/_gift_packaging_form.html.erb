@@ -54,7 +54,7 @@ $(function() {
 		</div>
 		<div class="clearfix"></div>
 		<div style="margin:24px auto auto 160px;">
-			<%= link_to t(:continue_shopping), "javascript:$('#gift-packaging-dialog_#{gift_package.id}').dialog('close');", :class => 'button large' %><br /><br />
+			<%= link_to_function t(:continue_shopping), "$('#gift-packaging-dialog_#{gift_package.id}').dialog('close');", :class => 'button large' %><br /><br />
 		</div>
 	</div>
 <% end %>
