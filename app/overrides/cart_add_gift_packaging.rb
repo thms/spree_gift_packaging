@@ -15,3 +15,9 @@ Deface::Override.new(:virtual_path => "spree/orders/_form",
                     :replace => "#cart-detail",
                     :partial => "spree/orders/cart_detail_table",
                     :disabled => false)
+
+Deface::Override.new(:virtual_path => "spree/checkout/_summary",
+                      :name => "checkout_summary_add_gift_packaging",
+                      :insert_top => "#summary-order-charges",
+                      :partial => "spree/checkout/gift_packaging_to_summary",
+                      :disabled => false)
