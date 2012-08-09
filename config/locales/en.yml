@@ -1,4 +1,6 @@
 en:
-    new_gift_package: New Gift Package
-    gift_packaging: Gift Packaging
-    gif_box: Gift Box
+  new_gift_package: New Gift Package
+  gift_packaging: Gift Packaging
+  gift_box: Gift Box
+  listing_gift_package_exceptions: Listing Gift Package Exceptions
+  new_gift_package_exception: New Gift Package Exception
