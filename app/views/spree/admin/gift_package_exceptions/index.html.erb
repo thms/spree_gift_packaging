@@ -22,6 +22,7 @@
   </tr>
 
 <% @gift_package_exceptions.each do |gift_package_exception| %>
+	<% next if gift_package_exception.product.deleted? %>
   <tr>
   	<td><%= link_to gift_package_exception.product.sku, gift_package_exception.product %></td>
   	<td><%= gift_package_exception.product.name %></td>
