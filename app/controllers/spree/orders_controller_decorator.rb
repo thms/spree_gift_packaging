@@ -36,7 +36,7 @@ Spree::OrdersController.class_eval do
       if params[:gift_packages] && params[:gift_packages][variant_id].to_i > 0
         line_item.update_attribute(:gift_package_id, params[:gift_packages][variant_id])
       else
-        line_item.update_attribute(:gift_package_id, Spree::Variant.find(variant_id).product.default_gift_package.id)
+        line_item.update_attribute(:gift_package_id, @variant.product.default_gift_package.id)
       end
     end if params[:variants]
 

@@ -15,7 +15,7 @@
 <legend>Basic Info</legend>
   <div class="field">
     <%= f.label :product %> 
-	<%= f.collection_select :product_id, Spree::Product.all, :id, :name %> <span class="required">*</span>
+	<%= f.collection_select :product_id, Spree::Product.not_deleted.all, :id, :name %> <span class="required">*</span>
   </div>
 
   <div class="field">
