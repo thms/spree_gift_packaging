@@ -13,7 +13,7 @@
         <td width="300"><%= item.variant.product.name %> <%= "(" + variant_options(item.variant) + ")" unless item.variant .option_values.empty? %></td>
         <td class="price"><%= number_to_currency item.price %></td>
         <td class="qty"><%= item.quantity %></td>
-        <td class="use_gift_packaging"><%= item.gift_package ? "Yes" : "No" %></td>
+        <td class="use_gift_packaging"><%= item.gift_package ? item.gift_package.title : "None" %></td>
         <td class="total"><span><%= number_to_currency (item.price * item.quantity) %></span></td>
       </tr>
     <% end %>
@@ -25,6 +25,10 @@
     </tr>
   </tbody>
   <tbody id="order-charges" data-hook="order_details_adjustments">
+  	<tr class="total">
+		<td colspan="4"><strong>Gift Packaging</strong></td>
+		<td class="total"><%= number_to_currency @order.gift_packaging_total %></td>
+	</tr>
     <% @order.adjustments.eligible.each do |adjustment| %>
     <% next if (adjustment.originator_type == 'Spree::TaxRate') and (adjustment.amount == 0) %>
       <tr class="total">
