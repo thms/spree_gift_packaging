@@ -48,11 +48,10 @@ module Spree
       self.calculator.preferred_amount
     end
     
+    # Check if the current gift package is valid for a given product.
+    # it is not valid if there is an exception defined for this product and gift package
     def valid_for_product?(product)
-      gift_package_exceptions.each do |exception|
-        return false if exception.covers?(product) 
-      end
-      true
+      GiftPackageException.where(:product_id => product.id, :gift_package_id => self.id).count == 0
     end
     
     # true of the gift package is the default for the product
