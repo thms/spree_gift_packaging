@@ -1,6 +1,7 @@
 <td data-hook="cart_gift_packaging_selector" style="text-align:center;">
 	<% if line_item.product.possible_gift_packages.count > 0  %>
-		<%= item_form.collection_select :gift_package_id, line_item.product.possible_gift_packages, :id, :title_for_selector, :include_blank => "No Gift Packaging" %>
+		<% no_gift_package = Spree::DummyGiftPackage.new('No Gift Packaging') %>
+		<%= item_form.collection_select :gift_package_id, line_item.product.possible_gift_packages << no_gift_package, :id, :title_for_selector %>
 	<% end %>
 </td>
 

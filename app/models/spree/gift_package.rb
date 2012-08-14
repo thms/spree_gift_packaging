@@ -19,7 +19,11 @@ module Spree
     # Is it called when qty changes? no
     def eligible?(object)
       Rails.logger.warn "============== #{object.class.name} =============="
-      object.gift_package_id == self.id
+      if object
+        object.gift_package_id == self.id
+      else
+        false
+      end
     end
     
     # Create adjustments for the line item
@@ -64,6 +68,14 @@ module Spree
       "#{self.title} (#{number_to_currency(self.price)} per bottle)"
     end
     
-    
+  end
+  
+  class DummyGiftPackage
+    attr_accessor :title_for_selector
+    attr_accessor :id
+    def initialize(title_for_selector)
+      self.title_for_selector = title_for_selector
+      self.id = 0
+    end
   end
 end
