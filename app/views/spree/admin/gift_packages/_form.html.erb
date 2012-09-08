@@ -24,6 +24,15 @@
   </div>
 
   <div class="field">
+    <%= f.label :weight %>
+    <%= f.text_field :weight %> lbs <span class="required">*</span>
+  </div>
+  <div class="field">
+    <%= f.label :dimensions %>
+    <%= f.text_field :height, :placeholder => 'height' %> x <%= f.text_field :width, :placeholder => 'width' %> x <%= f.text_field :depth, :placeholder => 'depth' %> [inches]
+  </div>
+
+  <div class="field">
 	<%= f.label :image_file_name %>
 	<%= f.file_field :image %>
 	<%= content_tag :p, image_tag(@gift_package.image.url) if @gift_package.image %>
