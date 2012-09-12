@@ -11,10 +11,12 @@ module Spree
        ## @calculators = GiftPackage.calculators.sort_by(&:name)
       end
       
-			def collection
+      def collection
         params[:search] ||= {}
         @search = super.metasearch(params[:search])
       end
+      
+
 
     end
   end
