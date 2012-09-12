@@ -9,21 +9,9 @@ Spree::Order.class_eval do
     end
     amount
   end
-  
-  # Creates new gift packaging charges for line items that use gift packaging
-  # This is called in the current_order_decorator.after_save_new_order 
-  # Deprecated, wrong model (charge per order), do not use
-  def create_gift_packaging_charge!
-
-    # creates an adjustment for each matching gift package. 
-    # there should be only one that matches an order (and actually they are matched on the line items anyway)
-    # TODO: Check if this is correct
-    Spree::GiftPackage.match(self).each { |package| package.adjust(self) }
     
-  end
-  
    
-   # Overide upatate totals to include the gift packaging amount in the line items amount
+   # Overide update totals to include the gift packaging amount in the line items amount
    # TODO: how to present then to the user?
    # Updates the following Order total values:
    #
@@ -52,6 +40,38 @@ Spree::Order.class_eval do
 
      adjustments
    end
+   
+   ## Override add_variant to allow adding the gift package right away, iso of a separate update call later in the controller
+   def add_variant_with_gift_package(variant, quantity = 1, gift_package_id = nil)
+     current_item = contains?(variant)
+     if current_item
+       current_item.quantity += quantity
+       current_item.gift_package_id = gift_package_id
+       current_item.save
+     else
+       current_item = Spree::LineItem.new(:quantity => quantity)
+       current_item.variant = variant
+       current_item.price   = variant.price
+       current_item.gift_package_id = gift_package_id
+       self.line_items << current_item
+     end
+
+     # populate line_items attributes for additional_fields entries
+     # that have populate => [:line_item]
+     Spree::Variant.additional_fields.select { |f| !f[:populate].nil? && f[:populate].include?(:line_item) }.each do |field|
+       value = ''
+
+       if field[:only].nil? || field[:only].include?(:variant)
+         value = variant.send(field[:name].gsub(' ', '_').downcase)
+       elsif field[:only].include?(:product)
+         value = variant.product.send(field[:name].gsub(' ', '_').downcase)
+       end
+       current_item.update_attribute(field[:name].gsub(' ', '_').downcase, value)
+     end
+
+     current_item
+   end
+   
    
   
   

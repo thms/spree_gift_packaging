@@ -1,5 +1,5 @@
 <div id="cart-form-gift-packaging">
-<% if @product.possible_gift_packages.count > 0 %>
+<% if @product.possible_gift_packages.count > 0 && @product.shipping_category.name != 'Non Shipping' %>
 	<h4>Gift Packaging</h4>
 	<ul id="gift-packaging-mockup">
 		<% @product.possible_gift_packages.each do |gift_package| %>

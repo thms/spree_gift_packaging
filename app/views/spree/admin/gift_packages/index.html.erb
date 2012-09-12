@@ -19,6 +19,7 @@
 	<th>Image</th>
     <th>Description</th>
     <th>Amount</th>
+	<th>Weight [lbs]</th>
     <th>Calculator</th>
     <th data-hook="admin_products_index_header_actions"></th>
   </tr>
@@ -29,8 +30,8 @@
 	<td><%= image_tag gift_package.image.url(:mini) %> </td>
     <td><%= gift_package.description %></td>
     <td><%= gift_package.calculator.preferred_amount %></td>
-    <td><%= link_to 'Show', admin_gift_package_path(gift_package) %>
-    <%= link_to 'Edit', edit_admin_gift_package_path(gift_package) %>
+    <td><%= gift_package.weight %></td>
+    <td><%= link_to 'Edit', edit_admin_gift_package_path(gift_package) %>
     <%= link_to 'Destroy', admin_gift_package_path(gift_package), confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
