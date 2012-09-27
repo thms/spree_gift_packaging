@@ -12,6 +12,7 @@ Spree::OrdersController.class_eval do
   # * Multiple products at once
   # +:products => {product_id => variant_id, product_id => variant_id}, :quantity => quantity +
   # +:products => {product_id => variant_id, product_id => variant_id}}, :quantity => {variant_id => quantity, variant_id => quantity}+
+  # Adds default gift package if there is not inforamtion present about gift packages
   def populate
     @order = current_order(true)
 
@@ -21,6 +22,8 @@ Spree::OrdersController.class_eval do
       @variant = Spree::Variant.find(variant_id)
       if params[:gift_packages] && params[:gift_packages][product_id].to_i > 0
         gift_package_id = params[:gift_packages][product_id]
+      elsif params[:gift_packages] && params[:gift_packages][product_id].to_i == 0
+        gift_package_id = 0
       else
         gift_package_id = Spree::Product.find(product_id).default_gift_package.id
       end
@@ -32,6 +35,8 @@ Spree::OrdersController.class_eval do
       @variant = Spree::Variant.find(variant_id)
       if params[:gift_packages] && params[:gift_packages][variant_id].to_i > 0
         gift_package_id = params[:gift_packages][variant_id]
+      elsif params[:gift_packages] && params[:gift_packages][variant_id].to_i == 0
+        gift_package_id = 0
       else
         gift_package_id = @variant.product.default_gift_package.id
       end
