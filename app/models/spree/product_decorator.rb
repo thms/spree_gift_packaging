@@ -9,10 +9,22 @@ Spree::Product.class_eval do
   end
   
   # Returns the default gift package for a product
+  # If the product does not have any gift packages, it should return the no gift package
+  # If the product does not have the global gift package enabled, it should use no gift package
   def default_gift_package
     # ToDo: make depend on the product itself.
-    gift_packages = Spree::GiftPackage.arel_table
-    Spree::GiftPackage.where(gift_packages[:title].matches("%suede%")).first
+    # check if the product is setup without gift packages
+    if self.possible_gift_packages.count == 0
+      gift_package = Spree::DummyGiftPackage.new('No Gift Packaging')
+    else
+      gift_packages = Spree::GiftPackage.arel_table
+      global_default_gift_package = Spree::GiftPackage.where(gift_packages[:title].matches("%suede%")).first
+      if self.possible_gift_packages.include?(global_default_gift_package)
+        gift_package =  global_default_gift_package
+      else
+        gift_package =  Spree::DummyGiftPackage.new('No Gift Packaging')
+      end
+    end
+    gift_package
   end
 end
-
