@@ -59,9 +59,13 @@ Spree::OrdersController.class_eval do
   def change_gift_package
     @order = current_order(false)
     @product = Spree::Product.find(params[:product_id])
-    @gift_package = Spree::GiftPackage.find(params[:gift_package_id])
     line_item = @order.line_items.where(:variant_id => @product.master.id).first
-    line_item.update_attribute(:gift_package_id, @gift_package.id)
+    if params[:gift_package_id] == "0"
+      line_item.update_attribute(:gift_package_id, 0)
+    else
+      @gift_package = Spree::GiftPackage.find(params[:gift_package_id])
+      line_item.update_attribute(:gift_package_id, @gift_package.id)
+    end
     fire_event('spree.order.contents_changed')
     respond_with(@order)
   end
