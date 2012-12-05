@@ -15,7 +15,8 @@
 
 <table class="index" id="listing_gift_packages">
   <tr>
-    <th>Title</th>
+  	<th>SKU</th>
+  	<th>Title</th>
 	<th>Image</th>
     <th>Description</th>
     <th>Amount</th>
@@ -26,7 +27,8 @@
 
 <% @gift_packages.each do |gift_package| %>
   <tr>
-    <td><%= gift_package.title %></td>
+  	<td><%= gift_package.sku %></td>
+  	<td><%= gift_package.title %></td>
 	<td><%= image_tag gift_package.image.url(:mini) %> </td>
     <td><%= gift_package.description %></td>
     <td><%= gift_package.calculator.preferred_amount %></td>
