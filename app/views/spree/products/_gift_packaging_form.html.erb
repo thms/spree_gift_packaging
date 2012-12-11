@@ -46,7 +46,7 @@ $(function() {
 <% @product.possible_gift_packages.each do |gift_package| %>
 	<div id="gift-packaging-dialog_<%= gift_package.id -%>" class="gift-packaging-dialog">
 		<h2><%= gift_package.title -%></h2>
-		<div><%= gift_package.description %></div>
+		<div><%= gift_package_description(gift_package)  %></div>
 		<div class="product-image" style="float:left;width:180px;margin-top:24px;margin-left:24px;">
 	  		<%= image_tag gift_package.image.url(:thumb), :itemprop => "name", :style => "float:right;text-decoration:none;"  %>
 		</div>
