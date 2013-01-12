@@ -15,10 +15,10 @@ module Spree
     
     has_many :gift_package_exceptions
     
+    
     # Should be called on order.update for line items and order, but is not when I change the gift package ID
     # Is it called when qty changes? no
     def eligible?(object)
-      Rails.logger.warn "============== #{object.class.name} =============="
       if object
         object.gift_package_id == self.id
       else
@@ -44,8 +44,8 @@ module Spree
     
     # TODO: Do we need to change this to the specific package?
     def self.match(order)
-      Rails.logger.warn "======== giftpackage.match #{order.class.name} ========"
-      Spree::GiftPackage.all
+      ##Spree::GiftPackage.all
+      Spree::GiftPackage.where(:available => true).all
     end
     
     def price
@@ -55,13 +55,13 @@ module Spree
     # Check if the current gift package is valid for a given product.
     # it is not valid if there is an exception defined for this product and gift package
     def valid_for_product?(product)
-      GiftPackageException.where(:product_id => product.id, :gift_package_id => self.id).count == 0
+      self.available && GiftPackageException.where(:product_id => product.id, :gift_package_id => self.id).count == 0
     end
     
     # true of the gift package is the default for the product
     # Todo: use prodcut dependent defaults
     def default_for_product?(product)
-      self.title.downcase.include?('suede')
+      self.is_default
     end
     
     def title_for_selector

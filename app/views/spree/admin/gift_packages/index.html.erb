@@ -21,7 +21,8 @@
     <th>Description</th>
     <th>Amount</th>
 	<th>Weight [lbs]</th>
-    <th>Calculator</th>
+    <th>Available</th>
+    <th>Default</th>
     <th data-hook="admin_products_index_header_actions"></th>
   </tr>
 
@@ -33,6 +34,8 @@
     <td><%= gift_package.description %></td>
     <td><%= gift_package.calculator.preferred_amount %></td>
     <td><%= gift_package.weight %></td>
+    <td><%= gift_package.available %></td>
+    <td><%= gift_package.is_default %></td>
     <td><%= link_to 'Edit', edit_admin_gift_package_path(gift_package) %>
     <%= link_to 'Destroy', admin_gift_package_path(gift_package), confirm: 'Are you sure?', method: :delete %></td>
   </tr>

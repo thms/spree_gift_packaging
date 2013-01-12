@@ -43,6 +43,16 @@
 	<%= content_tag :p, image_tag(@gift_package.image.url) if @gift_package.image %>
   </div>
 
+  <div class="field">
+	<%= f.label :available %>
+	<%= f.check_box :available %> (This field globally enables  disables the gift package for all products. If disabled, it takes precedence over the exceptions. If enabled, the exceptions take precedence.)
+  </div>
+
+  <div class="field">
+	<%= f.label :is_default %>
+	<%= f.check_box :is_default %> (Only one gift package can be the global default. Please make sure you always have exactly one available gift package selected as the default.)
+  </div>
+
 <%= render :partial => 'spree/admin/shared/calculator_fields', :locals => { :f => f } %>
 
   <div class="actions">

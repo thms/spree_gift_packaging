@@ -18,7 +18,7 @@ Spree::Product.class_eval do
       gift_package = Spree::DummyGiftPackage.new('No Gift Packaging')
     else
       gift_packages = Spree::GiftPackage.arel_table
-      global_default_gift_package = Spree::GiftPackage.where(gift_packages[:title].matches("%suede%")).first
+      global_default_gift_package = Spree::GiftPackage.where(:is_default => true).first
       if self.possible_gift_packages.include?(global_default_gift_package)
         gift_package =  global_default_gift_package
       else
