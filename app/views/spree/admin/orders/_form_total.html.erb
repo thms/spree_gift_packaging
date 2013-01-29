@@ -1,0 +1,7 @@
+<tbody id="order-total" data-hook="admin_order_form_total">
+  <tr>
+    <td colspan="4"><b><%= t(:order_total) %>:</b></td>
+    <td class="total"><span id="order_total"><%= number_to_currency @order.total %></span></td>
+    <td></td>
+  </tr>
+</tbody>
