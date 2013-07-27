@@ -9,6 +9,35 @@ Spree::Order.class_eval do
     end
     amount
   end
+  
+  # Returns the total revenue of gift packaging for a given SKU
+  def gift_packaging_revenue_for_sku(sku)
+    amount = 0.0
+    begin
+      line_items.each do |line_item|
+        amount += line_item.adjustments.eligible.gift_packaging.map(&:amount).sum if line_item.adjustments.eligible.gift_packaging.first.originator.sku == sku
+      end
+    rescue
+      amount = 0.0
+    end
+    amount
+  end
+  
+  # Returns the total cost of gift packaging for a given SKU
+  def gift_packaging_cost_for_sku(sku)
+    amount = 0.0
+    cost_per_item = Spree::Variant.find_by_sku(sku).cost_price
+    begin
+      line_items.each do |line_item|
+        amount += (line_item.quantity * cost_per_item) if line_item.adjustments.eligible.gift_packaging.first.originator.sku == sku
+      end
+    rescue
+      amount = 0.0
+    end
+    amount
+  end
+  
+  
     
    
    # Overide update totals to include the gift packaging amount in the line items amount
