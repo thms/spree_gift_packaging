@@ -13,16 +13,21 @@ $(function() {
 	
 	$("#gift-packaging-dialog").dialog({
 		autoOpen: false,
-		height: 500,
-		width: 500,
+		height: auto,
+		width: '80%',
+		maxWidth: 500,
 		modal: true,
-		title: ""
+		title: "",
+		open: function(event, ui){ 
+           fluidDialog(); // needed when autoOpen is set to true in this codepen
+        },
+        fluid: true,
+		zIndex: 3000
 	});
 
 });
 </script>
-<div id="gift-packaging-dialog" style="display:none;">
-	<h2>Add Gift Packaging</h2>
+<div id="gift-packaging-dialog" style="display:none;" title="Add Gift Packaging">
 	<div><%= @gift_package.description %></div>
 	<div class="product-image" style="float:left;width:180px;margin-top:24px;margin-left:24px;">
   		<%= image_tag @gift_package.image.url(:thumb), :itemprop => "name", :style => "float:right;text-decoration:none;"  %>

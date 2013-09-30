@@ -17,14 +17,6 @@
 <div style="clear:both;"></div>
 
 
-<style>
-	#gift-packaging-mockup li {cursor: hand; cursor: pointer;}
-	.gift-packaging-dialog .ui-icon {display:inline;}
-	.gift-packaging-dialog a.button {color:#fff;}
-	.gift-packaging-dialog div.price {font-size:36px;line-height:36px;color:#aaa;font-weight:bold}
-	.gift-packaging-dialog div.price:first-letter {font-size:28px;vertical-align:super;}
-</style>
-
 <script type="text/javascript">
 $(function() {
 	$( "#dialog:ui-dialog" ).dialog( "destroy" );
@@ -32,30 +24,40 @@ $(function() {
 
 		$("#gift-packaging-dialog_<%= gift_package.id -%>").dialog({
 			autoOpen: false,
-			height: 500,
-			width: 500,
+			height: 'auto',
+			width: '80%',
+			maxWidth: 500,
 			modal: true,
-			title: ""
+			title: "",
+			open: function(event, ui){ 
+	           fluidDialog(); // needed when autoOpen is set to true in this codepen
+	        },
+	        fluid: true,
+			zIndex: 3000
 		});
 
 	<% end %>
+	
+
+	
 });
 
 </script>
 
 <% @product.possible_gift_packages.each do |gift_package| %>
-	<div id="gift-packaging-dialog_<%= gift_package.id -%>" class="gift-packaging-dialog">
-		<h2><%= gift_package.title -%></h2>
+	<div id="gift-packaging-dialog_<%= gift_package.id -%>" class="gift-packaging-dialog" title="<%= gift_package.title -%>">
 		<div><%= gift_package.description %></div>
-		<div class="product-image" style="float:left;width:180px;margin-top:24px;margin-left:24px;">
-	  		<%= image_tag gift_package.image.url(:thumb), :itemprop => "name", :style => "float:right;text-decoration:none;"  %>
+		<div class="product-image">
+	  		<%= image_tag gift_package.image.url(:thumb), :itemprop => "name"  %>
 		</div>
-		<div style="float:left;margin-top:20px;margin-left:24px;width:240px;">
+		<div class="product-price">
 			<div class="price selling" itemprop="price"><%= number_to_currency gift_package.price %></div>
 		</div>
 		<div class="clearfix"></div>
-		<div style="margin:24px auto auto 160px;">
-			<%= link_to_function t(:continue_shopping), "$('#gift-packaging-dialog_#{gift_package.id}').dialog('close');", :class => 'button large' %><br /><br />
+		<div class="buttons">
+			<%= link_to_function t(:continue_shopping), "$('#gift-packaging-dialog_#{gift_package.id}').dialog('close');", :class => 'button large' %>
 		</div>
 	</div>
 <% end %>
+
+
