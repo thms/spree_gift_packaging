@@ -5,7 +5,8 @@ Spree::Product.class_eval do
   # Provide all possible gift packages for a product
   # remove the ones that are not valid for the current product (due to admin defined exceptions)
   def possible_gift_packages
-    Spree::GiftPackage.all.select { |gift_package| gift_package.valid_for_product?(self)  }
+    #Spree::GiftPackage.all.select { |gift_package| gift_package.valid_for_product?(self)  }
+    Spree::GiftPackage.all(:include => :calculator).select { |gift_package| gift_package.valid_for_product?(self)  }
   end
   
   # Returns the default gift package for a product
